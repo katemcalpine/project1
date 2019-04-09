@@ -1,0 +1,44 @@
+take user input from stdin to select each task in menu system.
+int switch (?) for the user to select different tasks:
+1. rotation cipher - encryption - message text and rotation amount key
+2. rotation cipher - encryption - cipher text only
+3. rotation cipher - decryption - cipher text and rotation amount key
+4. substitution cipher - encryption - message text and alphabet substitution key
+5. substitution cipher - encryption - cipher text only
+6. substitution cipher - decryption - cipher text and alphabet subsitiution key
+
+read message from input with scanf()
+read key from input with scanf()
+read from a file using the standard file I/O library (stdio.h?)
+output decryption sent to stdout and file I/O (create new .txt file, or rewrite dedicated output file, or)
+output encryption sent to stdout and file I/O (add to end of dedicated output file, or write extra line on .txt input file?)
+
+Use command line arguments (optional).
+
+Each task should be implemented as a different function.
+
+(advanced) - define the task as part of header inside an input file (.txt) that contains:
+* the message and key
+* cipher text and key
+* or just cipher text
+and should contain:
+* a single integer placed on the first line to indicate the task to be performed
+* #key (# used as indicator for key line. Any other symbol could be used)
+* the message or cipher text
+txt file needs to be read.
+individual lines can be ammended.
+can name the text files anything.
+take user input to read particular file and ammend message/key?
+can read file names as command line arguments (not assessed) - eg main(void) would have void replaced with .txt reading code.
+
+do not encrypt white space, punctuation, or numerals.
+if the input is charcter is not a letter, it should be copied to the output unmodified.
+upper case letters only - (advanced) convert lower case inputs to upper case.
+* if input character ascii number is between 65 - 90 and 97 - 122, then copy to output without modifying
+* if input character ascii number is between 97 - 122, then subtract 32 to make it upper case
+
+rotation cipher key is to be a single integer in the range 0 - 25.
+encryption with a shift of zero should just produce the initial message as the cipher message.
+
+substitution cipher key is a string of 26 upper case letters in order to their alphabetical substiution.
+substitution of a letter with itself should be allowed.
