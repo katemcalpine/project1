@@ -53,3 +53,5 @@ subDecMsgKey
 subEncMsgKey()
 
 const char alphabetEng[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+int rotKey = (read from rotation);
+int subKey = (read from substitution);
