@@ -42,3 +42,14 @@ encryption with a shift of zero should just produce the initial message as the c
 
 substitution cipher key is a string of 26 upper case letters in order to their alphabetical substiution.
 substitution of a letter with itself should be allowed.
+
+*********************************************************************************************************************************
+
+rotDecCip()
+rotDecMsgKey()
+rotEncMsgKey()
+subDecClip()
+subDecMsgKey
+subEncMsgKey()
+
+const char alphabetEng[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
