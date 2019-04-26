@@ -10,8 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void rotationFile(char cipher[], char key[], char message[]);
-void substitutionFile(char cipher[], char key[], char message[]);
+void readFile(char cipher[], char key[], char message[], int task);
 void rotDecCip(char cipher[]);
 void rotDecCipKey(char cipher[], char key[]);
 void rotEncMsgKey(char message[], char key[]);
@@ -21,44 +20,44 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[]);
 
 int main()
 {
-    int input;
+    int task;
     char message[1024];
     char key[26];
     char cipher[1024];
     const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    scanf("%d", &input);
-    //printf("Task selected: %d\n", input);
+    scanf("%d", &task);
+    //printf("Task selected: %d\n", task);
     
-    switch (input)
+    switch (task)
     {
         case 1:
             printf("Rotation Decryption Using Only Cipher\n\n");
-            rotationFile(cipher, key, message);
+            readFile(cipher, key, message, task);
             rotDecCip(cipher);
             break;
         case 2:
             printf("Rotation Decryption Using Cipher and Key\n\n");
-            rotationFile(cipher, key, message);
+            readFile(cipher, key, message, task);
             rotDecCipKey(cipher, key);
             break;
         case 3:
             printf("Rotation Encryption Using Message and Key\n\n");
-            rotationFile(cipher, key, message);
+            readFile(cipher, key, message, task);
             rotEncMsgKey(message, key);
             break;
         case 4:
             printf("Substitution Decryption Using Only Cipher\n\n");
-            substitutionFile(cipher, key, message);
+            readFile(cipher, key, message, task);
             subDecCip(cipher);
             break;
         case 5:
             printf("Substitution Decryption Using Cipher and Key\n\n");
-            substitutionFile(cipher, key, message);
+            readFile(cipher, key, message, task);
             subDecCipKey(cipher, key, alphabetEng);
             break;
         case 6:
             printf("Substitution Encryption Using Message and Key\n\n");
-            substitutionFile(cipher, key, message);
+            readFile(cipher, key, message, task);
             subEncMsgKey(message, key, alphabetEng);
             break;
         default:
@@ -67,31 +66,46 @@ int main()
     return 0;
 }
 
-void rotationFile(char cipher[], char key[], char message[]);
+void readFile(char cipher[], char key[], char message[], int task);
 {
     char str[1024];
     char c;
-    FILE *input;
-    input = fopen("rotation", "r");
-    if(input == NULL)
+    if (task >=1 && task == 3)
     {
-        perror("fopen()");
-        return;
+        FILE *input;
+        input = fopen("rotation", "r");
+        if(input == NULL)
+        {
+            perror("fopen()");
+            return;
+        }
+        else
+        {
+            fgets(str, 1024, input);
+            strcpy(message, str);
+            fgets(str, 26, input);
+            strcpy(key, str);
+            //fscanf(input, "%c", &c);
+        }
     }
-    else
-    fgets(str, 1024, input);
-    strcpy(message, str);
-    fgets(str, 26, input);
-    strcpy(key, str);
-    //fscanf(input, "%c", &c);
+    else if (task > 3 && task <= 6)
     {
-        
+        FILE *input;
+        input = fopen("substitution", "r");
+        if(input == NULL)
+        {
+            perror("fopen()");
+            return;
+        }
+        else
+        {
+            fgets(str, 1024, input);
+            strcpy(message, str);
+            fgets(str, 26, input);
+            strcpy(key, str);
+            //fscanf(input, "%c", &c);
+        }
     }
-}
-
-void substitutionFile(char cipher[], char key[], char message[]);
-{
-    
 }
 
 void rotDecCip(char cipher[])
