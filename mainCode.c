@@ -116,55 +116,30 @@ void rotDecCip(char cipher[])
 
 void rotDecCipKey(char message[], char key[])
 {
-    FILE *input;
-    input = fopen("rotation", "r");
-    if(input == NULL)
-    {
-        perror("fopen()");
-        return;
-    }
+    FILE *output;
+    output = fopen("output", "w");
 }
 
 void rotEncMsgKey(char message[], char key[])
 {
-    FILE *input;
-    input = fopen("rotation", "r");
-    if(input == NULL)
-    {
-        perror("fopen()");
-        return;
-    } 
+    FILE *output;
+    output = fopen("output", "w"); 
 }
 
 void subDecCip(char cipher[])
 {
-    FILE *input;
-    input = fopen("substitution", "r");
-    if(input == NULL)
-    {
-        perror("fopen()");
-        return;
-    }
+    FILE *output;
+    output = fopen("output", "w");
 }
 
 void subDecCipKey(char message[], char key[], const char alphabetEng[])
 {
-    FILE *input;
-    input = fopen("substitution", "r");
-    if(input == NULL)
-    {
-        perror("fopen()");
-        return;
-    }
+    FILE *output;
+    output = fopen("output", "w");
 }
 
 void subEncMsgKey(char message[], char key[], const char alphabetEng[])
 {
-    FILE *input;
-    input = fopen("substitution", "r");
-    if(input == NULL)
-    {
-        perror("fopen()");
-        return;
-    }
+    FILE *output;
+    output = fopen("output", "w");
 }
