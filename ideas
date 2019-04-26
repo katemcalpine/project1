@@ -1,10 +1,10 @@
 take user input from stdin to select each task in menu system.
 int switch (?) for the user to select different tasks:
 1. rotation cipher - encryption - message text and rotation amount key
-2. rotation cipher - encryption - cipher text only
+2. rotation cipher - decryption - cipher text only
 3. rotation cipher - decryption - cipher text and rotation amount key
 4. substitution cipher - encryption - message text and alphabet substitution key
-5. substitution cipher - encryption - cipher text only
+5. substitution cipher - decryption - cipher text only
 6. substitution cipher - decryption - cipher text and alphabet subsitiution key
 
 read message from input with scanf()

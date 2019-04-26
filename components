@@ -1,0 +1,6 @@
+rotEncMsgKey()
+rotDecMsgKey()
+rotDecCip()
+subEncMsgKey()
+subDecMsgKey()
+subDecCip()
