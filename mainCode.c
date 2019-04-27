@@ -14,21 +14,25 @@
 void readFile(char cipher[], char key[], char message[], int task);
 int stringConversion(char message[], char key[], char cipher[], int task);
 void rotDecCip(char cipher[]);
-void rotDecCipKey(char cipher[], char key[]);
-void rotEncMsgKey(char message[], char key[]);
+void rotDecCipKey(char cipher[], int keyInt);
+void rotEncMsgKey(char message[], int keyInt);
 void subDecCip(char cipher[]);
 void subDecCipKey(char cipher[], char key[], const char alphabetEng[]);
 void subEncMsgKey(char message[], char key[], const char alphabetEng[]);
 
 int main()
 {
+	FILE *selection;
+	selection = fopen("selection", "r");
     int task;
+    int keyInt;
     char message[1024];
     char key[26];
     char cipher[1024];
     const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     task = 1;
-    //scanf("%d", &task);
+    fscanf(selection, "%d", &task);
+    fclose(selection);
     //printf("Task selected: %d\n", task);
     
     switch (task)
@@ -36,31 +40,37 @@ int main()
         case 1:
             printf("Rotation Decryption Using Only Cipher\n\n");
             readFile(cipher, key, message, task);
+            stringConversion(message, key, cipher, task);
             rotDecCip(cipher);
             break;
         case 2:
             printf("Rotation Decryption Using Cipher and Key\n\n");
             readFile(cipher, key, message, task);
-            rotDecCipKey(cipher, key);
+            keyInt = stringConversion(message, key, cipher, task);
+            rotDecCipKey(cipher, keyInt);
             break;
         case 3:
             printf("Rotation Encryption Using Message and Key\n\n");
             readFile(cipher, key, message, task);
-            rotEncMsgKey(message, key);
+            keyInt = stringConversion(message, key, cipher, task);
+            rotEncMsgKey(message, keyInt);
             break;
         case 4:
             printf("Substitution Decryption Using Only Cipher\n\n");
             readFile(cipher, key, message, task);
+            stringConversion(message, key, cipher, task);
             subDecCip(cipher);
             break;
         case 5:
             printf("Substitution Decryption Using Cipher and Key\n\n");
             readFile(cipher, key, message, task);
+            stringConversion(message, key, cipher, task);
             subDecCipKey(cipher, key, alphabetEng);
             break;
         case 6:
             printf("Substitution Encryption Using Message and Key\n\n");
             readFile(cipher, key, message, task);
+            stringConversion(message, key, cipher, task);
             subEncMsgKey(message, key, alphabetEng);
             break;
         default:
@@ -72,7 +82,7 @@ int main()
 void readFile(char cipher[], char key[], char message[], int task)
 {
     char line[1024];
-    //char c;
+    char c;
     FILE *input;
     if (task > 0 && task <= 3)
     {
@@ -91,9 +101,9 @@ void readFile(char cipher[], char key[], char message[], int task)
             fgets(line, 26, input);
             strcpy(key, line);
             printf("%s\n", key);
-            //fscanf(input, "%c", &c);
+            fscanf(input, "%c", &c);
+            printf("%c",c);
             fclose(input);
-            stringConversion(message, key, cipher, task);
             return;
         }
     }
@@ -115,7 +125,6 @@ void readFile(char cipher[], char key[], char message[], int task)
             printf("%s\n", key);
             //fscanf(input, "%c", &c);
             fclose(input);
-            stringConversion(message, key, cipher, task);
             return;
         }
     return;
@@ -124,6 +133,16 @@ void readFile(char cipher[], char key[], char message[], int task)
 
 int stringConversion(char message[], char key[], char cipher[], int task)
 {
+	for (int i = 0; message[i] != '\0'; i++)
+	    {
+	        if (message[i] >= 'a' && message[i] <= 'z')
+	        	message[i] -= 32;
+	    }
+	for (int i = 0; cipher[i] != '\0'; i++)
+	    {
+	        if (cipher[i] >= 'a' && cipher[i] <= 'z')
+	        	cipher[i] -= 32;
+	    }
     if (task > 0 && task <= 3)
     {
         int keyInt = atoi(key);
@@ -134,7 +153,7 @@ int stringConversion(char message[], char key[], char cipher[], int task)
         for (int i = 0; key[i] != '\0'; i++)
         {
             if (key[i] >= 'a' && key[i] <= 'z')
-            key[i] -= 32;
+            	key[i] -= 32;
         }
     }
     return 0;
@@ -147,14 +166,14 @@ void rotDecCip(char cipher[])
    return;
 }
 
-void rotDecCipKey(char message[], char key[])
+void rotDecCipKey(char cipher[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
     return;
 }
 
-void rotEncMsgKey(char message[], char key[])
+void rotEncMsgKey(char message[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
@@ -168,7 +187,7 @@ void subDecCip(char cipher[])
     return;
 }
 
-void subDecCipKey(char message[], char key[], const char alphabetEng[])
+void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
