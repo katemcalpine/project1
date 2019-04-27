@@ -30,7 +30,6 @@ int main()
     char key[26];
     char cipher[1024];
     const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    task = 1;
     fscanf(selection, "%d", &task);
     fclose(selection);
     //printf("Task selected: %d\n", task);
@@ -90,21 +89,22 @@ void readFile(char cipher[], char key[], char message[], int task)
         if(input == NULL)
         {
             perror("fopen()");
-            return;
         }
         else
         {
-            //fscanf(input, "%s", message);
             fgets(line, 1024, input);
             strcpy(message, line);
-            printf("%s\n", message);
+            //printf("%s\n", message);
             fgets(line, 26, input);
             strcpy(key, line);
-            printf("%s\n", key);
-            fscanf(input, "%c", &c);
-            printf("%c",c);
+            //printf("%s\n", key);
+            for(int i = 0; !feof(input); i++)
+            {
+            	fscanf(input, "%c", &line[i]);
+            }
+            strcpy(cipher, line);
+            //printf("%s",cipher);
             fclose(input);
-            return;
         }
     }
     else if (task > 3 && task <= 6)
@@ -113,19 +113,22 @@ void readFile(char cipher[], char key[], char message[], int task)
         if(input == NULL)
         {
             perror("fopen()");
-            return;
         }
         else
         {
-            fgets(line, 1024, input);
-            strcpy(message, line);
-            printf("%s\n", message);
+        	fgets(line, 1024, input);
+        	strcpy(message, line);
+        	//printf("%s\n", message);
             fgets(line, 26, input);
             strcpy(key, line);
-            printf("%s\n", key);
-            //fscanf(input, "%c", &c);
+            //printf("%s\n", key);
+            for(int i = 0; !feof(input); i++)
+            {
+            	fscanf(input, "%c", &line[i]);
+            }
+            strcpy(cipher, line);
+            //printf("%s",cipher);
             fclose(input);
-            return;
         }
     return;
     }
