@@ -1,6 +1,6 @@
 /*
  * Encryption/Decryption Program
- * 
+ * poo
  * Created on: 26/04/19
  * Author: Kate McAlpine (c3078083)
  * Class: ENGG1003
