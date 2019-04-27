@@ -84,6 +84,8 @@ void readFile(char cipher[], char key[], char message[], int task)
         else
         {
             //fscanf(input, "%s", message);
+            fgets(str, 255, input);
+            strcpy(cipher, str);
             fgets(str, 1024, input);
             strcpy(message, str);
             printf("%s\n", message);
