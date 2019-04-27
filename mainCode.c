@@ -9,8 +9,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void readFile(char cipher[], char key[], char message[], int task);
+int stringConversion(char message[], char key[], char cipher[], int task);
 void rotDecCip(char cipher[]);
 void rotDecCipKey(char cipher[], char key[]);
 void rotEncMsgKey(char message[], char key[]);
@@ -25,6 +27,7 @@ int main()
     char key[26];
     char cipher[1024];
     const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    int keyInt;
     scanf("%d", &task);
     //printf("Task selected: %d\n", task);
     
@@ -61,18 +64,18 @@ int main()
             subEncMsgKey(message, key, alphabetEng);
             break;
         default:
-            printf("%d is not an option.\n", input);
+            printf("%d is not an option.\n", task);
     }
     return 0;
 }
 
-void readFile(char cipher[], char key[], char message[], int task);
+void readFile(char cipher[], char key[], char message[], int task)
 {
     char str[1024];
     char c;
-    if (task >=1 && task == 3)
+    FILE *input;
+    if (task > 0 && task <= 3)
     {
-        FILE *input;
         input = fopen("rotation", "r");
         if(input == NULL)
         {
@@ -83,14 +86,17 @@ void readFile(char cipher[], char key[], char message[], int task);
         {
             fgets(str, 1024, input);
             strcpy(message, str);
+            printf("%s\n", message);
             fgets(str, 26, input);
             strcpy(key, str);
+            printf("%s\n", key);
             //fscanf(input, "%c", &c);
+            stringConversion(message, key, cipher, task);
+            return;
         }
     }
     else if (task > 3 && task <= 6)
     {
-        FILE *input;
         input = fopen("substitution", "r");
         if(input == NULL)
         {
@@ -101,9 +107,31 @@ void readFile(char cipher[], char key[], char message[], int task);
         {
             fgets(str, 1024, input);
             strcpy(message, str);
+            printf("%s\n", message);
             fgets(str, 26, input);
             strcpy(key, str);
+            printf("%s\n", key);
             //fscanf(input, "%c", &c);
+            stringConversion(message, key, cipher, task);
+            return;
+        }
+    return;
+    }
+}
+
+int stringConversion(char message[], char key[], char cipher[], int task)
+{
+    if (task > 0 && task <= 3)
+    {
+        int keyInt = atoi(key);
+        return keyInt;
+    }
+    else if (task > 3 && task <= 6)
+    {
+        for (int i = 0; key[i] != '\0'; i++)
+        {
+            if (key[i] >= 'a' && key[i] <= 'z')
+            key[i] -= 32;
         }
     }
 }
