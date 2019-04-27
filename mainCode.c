@@ -1,6 +1,6 @@
 /*
  * Encryption/Decryption Program
- * poo
+ *
  * Created on: 26/04/19
  * Author: Kate McAlpine (c3078083)
  * Class: ENGG1003
@@ -80,8 +80,8 @@ int main()
 
 void readFile(char cipher[], char key[], char message[], int task)
 {
-    char line[1024];
-    char c;
+    int i;
+	char line[1024];
     FILE *input;
     if (task > 0 && task <= 3)
     {
@@ -93,15 +93,19 @@ void readFile(char cipher[], char key[], char message[], int task)
         else
         {
             fgets(line, 1024, input);
-            strcpy(message, line);
+        	//fscanf(input, "%s", &line);
+        	strcpy(message, line);
             //printf("%s\n", message);
             fgets(line, 26, input);
+        	//fscanf(input, "%s", &line);
             strcpy(key, line);
             //printf("%s\n", key);
-            for(int i = 0; !feof(input); i++)
+            for(i=0; !feof(input); i++)
             {
             	fscanf(input, "%c", &line[i]);
             }
+            line[i-1]='\0';
+            //fgets(line, 1024, input);
             strcpy(cipher, line);
             //printf("%s",cipher);
             fclose(input);
@@ -117,18 +121,22 @@ void readFile(char cipher[], char key[], char message[], int task)
         else
         {
         	fgets(line, 1024, input);
+        	//fscanf(input, "%s", &line);
         	strcpy(message, line);
         	//printf("%s\n", message);
-            fgets(line, 26, input);
-            strcpy(key, line);
-            //printf("%s\n", key);
-            for(int i = 0; !feof(input); i++)
-            {
-            	fscanf(input, "%c", &line[i]);
-            }
-            strcpy(cipher, line);
-            //printf("%s",cipher);
-            fclose(input);
+        	fgets(line, 26, input);
+        	//fscanf(input, "%s", &line);
+        	strcpy(key, line);
+        	//printf("%s\n", key);
+        	for(i=0; !feof(input); i++)
+        	{
+        		fscanf(input, "%c", &line[i]);
+        	}
+        	line[i-1]='\0';
+        	//fgets(line, 1024, input);
+        	strcpy(cipher, line);
+        	//printf("%s",cipher);
+        	fclose(input);
         }
     return;
     }
@@ -164,15 +172,21 @@ int stringConversion(char message[], char key[], char cipher[], int task)
 
 void rotDecCip(char cipher[])
 {
-   FILE *output;
-   output = fopen("output", "w");
-   return;
+	FILE *output;
+   	output = fopen("output", "w");
+   	printf("Cipher: %s\n", cipher);
+   	fprintf(output, "Cipher: %s\n", cipher);
+    return;
 }
 
 void rotDecCipKey(char cipher[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
+    printf("Cipher: %s\n", cipher);
+    fprintf(output, "Cipher: %s\n", cipher);
+    printf("Key: %d\n", keyInt);
+    fprintf(output, "Key: %d\n", keyInt);
     return;
 }
 
@@ -180,6 +194,10 @@ void rotEncMsgKey(char message[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
+    printf("Message: %s\n", message);
+    fprintf(output, "Message: %s\n", message);
+    printf("Key: %d\n", keyInt);
+    fprintf(output, "Cipher: %d\n", keyInt);
     return;
 }
 
@@ -187,6 +205,8 @@ void subDecCip(char cipher[])
 {
     FILE *output;
     output = fopen("output", "w");
+    printf("Cipher: %s\n", cipher);
+    fprintf(output, "Cipher: %s\n", cipher);
     return;
 }
 
@@ -194,6 +214,10 @@ void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
+    printf("Cipher: %s\n", cipher);
+    fprintf(output, "Cipher: %s\n", cipher);
+    printf("Key: %s\n", key);
+    fprintf(output, "Key: %s\n", key);
     return;
 }
 
@@ -201,5 +225,9 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
+    printf("Message: %s\n", message);
+    fprintf(output, "Message: %s\n", message);
+    printf("Key: %s\n", key);
+    fprintf(output, "Key: %s\n", key);
     return;
 }
