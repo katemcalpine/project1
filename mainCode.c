@@ -70,7 +70,7 @@ int main()
 
 void readFile(char cipher[], char key[], char message[], int task)
 {
-    char str[1024];
+    char line[1024];
     //char c;
     FILE *input;
     if (task > 0 && task <= 3)
@@ -84,15 +84,14 @@ void readFile(char cipher[], char key[], char message[], int task)
         else
         {
             //fscanf(input, "%s", message);
-            fgets(str, 255, input);
-            strcpy(cipher, str);
-            fgets(str, 1024, input);
-            strcpy(message, str);
+            fgets(line, 1024, input);
+            strcpy(message, line);
             printf("%s\n", message);
-            fgets(str, 26, input);
-            strcpy(key, str);
+            fgets(line, 26, input);
+            strcpy(key, line);
             printf("%s\n", key);
             //fscanf(input, "%c", &c);
+            fclose(input);
             stringConversion(message, key, cipher, task);
             return;
         }
@@ -107,13 +106,14 @@ void readFile(char cipher[], char key[], char message[], int task)
         }
         else
         {
-            fgets(str, 1024, input);
-            strcpy(message, str);
+            fgets(line, 1024, input);
+            strcpy(message, line);
             printf("%s\n", message);
-            fgets(str, 26, input);
-            strcpy(key, str);
+            fgets(line, 26, input);
+            strcpy(key, line);
             printf("%s\n", key);
             //fscanf(input, "%c", &c);
+            fclose(input);
             stringConversion(message, key, cipher, task);
             return;
         }
