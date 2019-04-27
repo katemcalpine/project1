@@ -27,7 +27,8 @@ int main()
     char key[26];
     char cipher[1024];
     const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    scanf("%d", &task);
+    task = 1;
+    //scanf("%d", &task);
     //printf("Task selected: %d\n", task);
     
     switch (task)
