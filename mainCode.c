@@ -27,7 +27,6 @@ int main()
     char key[26];
     char cipher[1024];
     const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    int keyInt;
     scanf("%d", &task);
     //printf("Task selected: %d\n", task);
     
@@ -72,7 +71,7 @@ int main()
 void readFile(char cipher[], char key[], char message[], int task)
 {
     char str[1024];
-    char c;
+    //char c;
     FILE *input;
     if (task > 0 && task <= 3)
     {
@@ -84,6 +83,7 @@ void readFile(char cipher[], char key[], char message[], int task)
         }
         else
         {
+            //fscanf(input, "%s", message);
             fgets(str, 1024, input);
             strcpy(message, str);
             printf("%s\n", message);
@@ -134,40 +134,47 @@ int stringConversion(char message[], char key[], char cipher[], int task)
             key[i] -= 32;
         }
     }
+    return 0;
 }
 
 void rotDecCip(char cipher[])
 {
    FILE *output;
    output = fopen("output", "w");
+   return;
 }
 
 void rotDecCipKey(char message[], char key[])
 {
     FILE *output;
     output = fopen("output", "w");
+    return;
 }
 
 void rotEncMsgKey(char message[], char key[])
 {
     FILE *output;
-    output = fopen("output", "w"); 
+    output = fopen("output", "w");
+    return;
 }
 
 void subDecCip(char cipher[])
 {
     FILE *output;
     output = fopen("output", "w");
+    return;
 }
 
 void subDecCipKey(char message[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
+    return;
 }
 
 void subEncMsgKey(char message[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
+    return;
 }
