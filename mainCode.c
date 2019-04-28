@@ -16,7 +16,7 @@ int stringConversion(char message[], char key[], char cipher[], int task);
 void rotDecCip(char cipher[]);
 void rotDecCipKey(char cipher[], int keyInt);
 void rotEncMsgKey(char message[], int keyInt);
-void subDecCip(char cipher[]);
+void subDecCip(char cipher[], const char alphabetEng[]);
 void subDecCipKey(char cipher[], char key[], const char alphabetEng[]);
 void subEncMsgKey(char message[], char key[], const char alphabetEng[]);
 
@@ -29,7 +29,9 @@ int main()
     char message[1024];
     char key[26];
     char cipher[1024];
-    const char alphabetEng[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const char alphabetEng[27] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','\0'};
+    //for (int i = 0; alphabetEng[i] != '\0'; i++)
+    	//printf("%c", alphabetEng[i]);
     fscanf(selection, "%d", &task);
     fclose(selection);
     //printf("Task selected: %d\n", task);
@@ -58,7 +60,7 @@ int main()
             printf("Substitution Decryption Using Only Cipher\n\n");
             readFile(cipher, key, message, task);
             stringConversion(message, key, cipher, task);
-            subDecCip(cipher);
+            subDecCip(cipher, alphabetEng);
             break;
         case 5:
             printf("Substitution Decryption Using Cipher and Key\n\n");
@@ -82,10 +84,11 @@ void readFile(char cipher[], char key[], char message[], int task)
 {
     int i;
 	char line[1024];
-    FILE *input;
+    //FILE *input;
     if (task > 0 && task <= 3)
     {
-        input = fopen("rotation", "r");
+    	FILE *input;
+    	input = fopen("rotation", "r");
         if(input == NULL)
         {
             perror("fopen()");
@@ -96,7 +99,7 @@ void readFile(char cipher[], char key[], char message[], int task)
         	//fscanf(input, "%s", &line);
         	strcpy(message, line);
             //printf("%s\n", message);
-            fgets(line, 26, input);
+            fgets(line, 27, input);
         	//fscanf(input, "%s", &line);
             strcpy(key, line);
             //printf("%s\n", key);
@@ -113,7 +116,8 @@ void readFile(char cipher[], char key[], char message[], int task)
     }
     else if (task > 3 && task <= 6)
     {
-        input = fopen("substitution", "r");
+    	FILE *input;
+    	input = fopen("substitution", "r");
         if(input == NULL)
         {
             perror("fopen()");
@@ -124,7 +128,7 @@ void readFile(char cipher[], char key[], char message[], int task)
         	//fscanf(input, "%s", &line);
         	strcpy(message, line);
         	//printf("%s\n", message);
-        	fgets(line, 26, input);
+        	fgets(line, 30, input);
         	//fscanf(input, "%s", &line);
         	strcpy(key, line);
         	//printf("%s\n", key);
@@ -225,7 +229,7 @@ void rotEncMsgKey(char message[], int keyInt)
     return;
 }
 
-void subDecCip(char cipher[])
+void subDecCip(char cipher[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
@@ -242,6 +246,28 @@ void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
     fprintf(output, "Cipher:\n%s\n\n", cipher);
     printf("Key:\n%s\n\n", key);
     fprintf(output, "Key:\n%s\n\n", key);
+    for(int i = 0, ii = 0; cipher[i] != '\0';)
+    {
+     	if (cipher[i] >= 'A' && cipher[i] <= 'Z') // check if cipher char is a capital letter
+     	{
+     		if (cipher[i] == key[ii]) // matches cipher char to char in key
+        	{
+        		cipher[i] = alphabetEng[ii]; // change cipher char to char in alphabetEng in same index
+        		i++; // move to next char in cipher array
+        		ii=0; // alphabetEng and key array positions remain constant
+        	}
+        	else
+        	{
+        			ii++; // alphabetEng and key array positions move up one
+        	}
+        }
+       	else
+       	{
+       			i++; // copies char and moves to next char in cipher array if char isn't a capital letter
+       	}
+    }
+    printf("Decrypted message:\n%s\n", cipher);
+    fprintf(output, "Decrypted message:\n%s\n", cipher);
     return;
 }
 
@@ -253,24 +279,24 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
     fprintf(output, "Message:\n%s\n", message);
     printf("Key:\n%s\n\n", key);
     fprintf(output, "Key:\n%s\n\n", key);
-    for(int i = 0, j = 0; message[i] != '\0';)
+    for(int i = 0, ii = 0; message[i] != '\0';)
     {
-    	if (message[i] >= 'A' && message[i] <= 'Z')
+    	if (message[i] >= 'A' && message[i] <= 'Z') // check if message char is a capital letter
     	{
-    		if (message[i] == alphabetEng[j])
+    		if (message[i] == alphabetEng[ii]) // matches message char to char in alphabet
     		{
-    			message[i] = key[j];
-    			i++;
-    			j=0;
+    			message[i] = key[ii]; // change message char to char in key in same index
+    			i++; // move to next char in message array
+    			ii=0; // alphabetEng and key array positions remain constant
     		}
     		else
     		{
-    				j++;
+    				ii++; // alphabetEng and key array positions move up one
     		}
     	}
     	else
     	{
-    			i++;
+    			i++; // copies char and moves to next char in message array if char isn't a capital letter
     	}
     }
     printf("Encoded message:\n%s\n", message);

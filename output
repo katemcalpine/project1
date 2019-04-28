@@ -1,9 +1,10 @@
-Message:
-TEST MESSAGE
-
-Key:
-QWERTYUIOPASDFGHJKLZXCVBN
-
-Encoded message:
+Cipher:
 ZTLZ DTLLQUT
 
+Key:
+QWERTYUIOPASDFGHJKLZXCVBNM
+
+
+Decrypted message:
+TEST MESS
+GE
