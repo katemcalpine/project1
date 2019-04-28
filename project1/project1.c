@@ -184,7 +184,7 @@ void rotDecCip(char cipher[])
    	output = fopen("output", "w");
    	printf("Cipher: %s\n\n", cipher);
    	fprintf(output, "Cipher: %s\n\n", cipher);
-   	for(ii = 1; ii < 26; ii++)
+   	for(ii = 0; ii < 26; ii++)
    	{
    		for(i = 0; cipher[i] != '\0'; i++)
    		{
