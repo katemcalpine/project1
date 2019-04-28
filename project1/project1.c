@@ -27,7 +27,7 @@ int main()
     int task;
     int keyInt;
     char message[1024];
-    char key[26];
+    char key[30];
     char cipher[1024];
     const char alphabetEng[27] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','\0'};
     //for (int i = 0; alphabetEng[i] != '\0'; i++)
@@ -99,7 +99,7 @@ void readFile(char cipher[], char key[], char message[], int task)
         	//fscanf(input, "%s", &line);
         	strcpy(message, line);
             //printf("%s\n", message);
-            fgets(line, 27, input);
+            fgets(line, 255, input);
         	//fscanf(input, "%s", &line);
             strcpy(key, line);
             //printf("%s\n", key);
@@ -128,7 +128,8 @@ void readFile(char cipher[], char key[], char message[], int task)
         	//fscanf(input, "%s", &line);
         	strcpy(message, line);
         	//printf("%s\n", message);
-        	fgets(line, 30, input);
+        	//fscanf(input, "%s", line);
+        	fgets(line, 255, input);
         	//fscanf(input, "%s", &line);
         	strcpy(key, line);
         	//printf("%s\n", key);
