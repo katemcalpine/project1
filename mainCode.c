@@ -4,7 +4,7 @@
  * Created on: 26/04/19
  * Author: Kate McAlpine (c3078083)
  * Class: ENGG1003
- * Lab: EFG14
+ * Lab: Tuesday, 11am, EFG14
  */
 
 #include <stdio.h>
@@ -249,9 +249,31 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Message:\n%s\n\n", message);
-    fprintf(output, "Message:\n%s\n\n", message);
+    printf("Message:\n%s\n", message);
+    fprintf(output, "Message:\n%s\n", message);
     printf("Key:\n%s\n\n", key);
     fprintf(output, "Key:\n%s\n\n", key);
+    for(int i = 0, j = 0; message[i] != '\0';)
+    {
+    	if (message[i] >= 'A' && message[i] <= 'Z')
+    	{
+    		if (message[i] == alphabetEng[j])
+    		{
+    			message[i] = key[j];
+    			i++;
+    			j=0;
+    		}
+    		else
+    		{
+    				j++;
+    		}
+    	}
+    	else
+    	{
+    			i++;
+    	}
+    }
+    printf("Encoded message:\n%s\n", message);
+    fprintf(output, "Encoded message:\n%s\n", message);
     return;
 }
