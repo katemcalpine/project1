@@ -196,8 +196,19 @@ void rotEncMsgKey(char message[], int keyInt)
     output = fopen("output", "w");
     printf("Message: %s\n", message);
     fprintf(output, "Message: %s\n", message);
-    printf("Key: %d\n", keyInt);
-    fprintf(output, "Cipher: %d\n", keyInt);
+    printf("Key: %d\n\n", keyInt);
+    fprintf(output, "Cipher: %d\n\n", keyInt);
+    for(int i = 0; message[i] != '\0'; i++) {
+    	if (message[i] >= 'A' && message[i] <= 'Z')
+    	{
+    		/* (((location of char in message array) - 65 to make it 0 ascii)
+    		 * + keyInt to shift char to new ascii location) + 65 to accurately represent ascii encrypted char.
+    		 */
+    		message[i] = (((message[i]-65) + keyInt)%26) + 65;
+    	}
+    }
+    printf("Encrypted message: %s\n", message);
+    fprintf(output, "Encrypted message: %s\n", message);
     return;
 }
 
