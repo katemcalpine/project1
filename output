@@ -1,6 +1,9 @@
-Message: TEST MESSAGE
+Message:
+TEST MESSAGE
 
-Cipher: 25
+Key:
+25
 
-Encrypted message: SDRS LDRRZFD
+Encrypted message:
+SDRS LDRRZFD
 

@@ -183,10 +183,22 @@ void rotDecCipKey(char cipher[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Cipher: %s\n", cipher);
-    fprintf(output, "Cipher: %s\n", cipher);
-    printf("Key: %d\n", keyInt);
-    fprintf(output, "Key: %d\n", keyInt);
+    printf("Cipher:\n%s\n\n", cipher);
+    fprintf(output, "Cipher:\n%s\n\n", cipher);
+    printf("Key:\n%d\n\n", keyInt);
+    fprintf(output, "Key:\n%d\n\n", keyInt);
+    for(int i = 0; cipher[i] != '\0'; ++i) {
+    	if (cipher[i] >= 'A' && cipher[i] <= 'Z')
+    	{
+    		/* ((location of char in cipher array) - 65 to make it 0 ascii)
+    		 * + (26 - keyInt to shift char to new ascii location in negative direction) %26 to find remainder integer)
+    		 * + 65 to remainder integer to accurately represent ascii encrypted char.
+    		 */
+    		cipher[i] = ((cipher[i] - 65 + (26 - keyInt)) %26) + 65;
+    	}
+    }
+    printf("Decrypted message:\n%s\n", cipher);
+    fprintf(output, "Decrypted message:\n%s\n", cipher);
     return;
 }
 
@@ -194,21 +206,22 @@ void rotEncMsgKey(char message[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Message: %s\n", message);
-    fprintf(output, "Message: %s\n", message);
-    printf("Key: %d\n\n", keyInt);
-    fprintf(output, "Cipher: %d\n\n", keyInt);
+    printf("Message:\n%s\n", message);
+    fprintf(output, "Message:\n%s\n", message);
+    printf("Key:\n%d\n\n", keyInt);
+    fprintf(output, "Key:\n%d\n\n", keyInt);
     for(int i = 0; message[i] != '\0'; i++) {
     	if (message[i] >= 'A' && message[i] <= 'Z')
     	{
     		/* (((location of char in message array) - 65 to make it 0 ascii)
-    		 * + keyInt to shift char to new ascii location) + 65 to accurately represent ascii encrypted char.
+    		 * + keyInt to shift char to new ascii number in positive direction) %26 to find remainder integer)
+    		 * + 65 to remainder integer to accurately represent ascii encrypted char.
     		 */
-    		message[i] = (((message[i]-65) + keyInt)%26) + 65;
+    		message[i] = (((message[i] - 65) + keyInt) %26) + 65;
     	}
     }
-    printf("Encrypted message: %s\n", message);
-    fprintf(output, "Encrypted message: %s\n", message);
+    printf("Encrypted message:\n%s\n", message);
+    fprintf(output, "Encrypted message:\n%s\n", message);
     return;
 }
 
@@ -216,8 +229,8 @@ void subDecCip(char cipher[])
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Cipher: %s\n", cipher);
-    fprintf(output, "Cipher: %s\n", cipher);
+    printf("Cipher:\n%s\n\n", cipher);
+    fprintf(output, "Cipher:\n%s\n\n", cipher);
     return;
 }
 
@@ -225,10 +238,10 @@ void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Cipher: %s\n", cipher);
-    fprintf(output, "Cipher: %s\n", cipher);
-    printf("Key: %s\n", key);
-    fprintf(output, "Key: %s\n", key);
+    printf("Cipher:\n%s\n\n", cipher);
+    fprintf(output, "Cipher:\n%s\n\n", cipher);
+    printf("Key:\n%s\n\n", key);
+    fprintf(output, "Key:\n%s\n\n", key);
     return;
 }
 
@@ -236,9 +249,9 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Message: %s\n", message);
-    fprintf(output, "Message: %s\n", message);
-    printf("Key: %s\n", key);
-    fprintf(output, "Key: %s\n", key);
+    printf("Message:\n%s\n\n", message);
+    fprintf(output, "Message:\n%s\n\n", message);
+    printf("Key:\n%s\n\n", key);
+    fprintf(output, "Key:\n%s\n\n", key);
     return;
 }
