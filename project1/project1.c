@@ -83,6 +83,7 @@ int main()
 void readFile(char cipher[], char key[], char message[], int task)
 {
     int i;
+    char c;
 	char line[1024];
     //FILE *input;
     if (task > 0 && task <= 3)
@@ -95,22 +96,22 @@ void readFile(char cipher[], char key[], char message[], int task)
         }
         else
         {
-            fgets(line, 1024, input);
-        	//fscanf(input, "%s", &line);
+            for (i=0; c < 48 || c > 57; i++)
+            {
+            	fscanf(input, "%c", &line[i]);
+            	c = line[i];
+            }
+            line[i-1] = '\0';
         	strcpy(message, line);
-            //printf("%s\n", message);
+        	fseek( input, -1, SEEK_CUR );
             fgets(line, 255, input);
-        	//fscanf(input, "%s", &line);
             strcpy(key, line);
-            //printf("%s\n", key);
             for(i=0; !feof(input); i++)
             {
             	fscanf(input, "%c", &line[i]);
             }
             line[i-1]='\0';
-            //fgets(line, 1024, input);
             strcpy(cipher, line);
-            //printf("%s",cipher);
             fclose(input);
         }
     }
