@@ -150,15 +150,15 @@ void readFile(char cipher[], char key[], char message[], int task)
 int stringConversion(char message[], char key[], char cipher[], int task)
 {
 	for (int i = 0; message[i] != '\0'; i++)
-	    {
-	        if (message[i] >= 'a' && message[i] <= 'z')
-	        	message[i] -= 32;
-	    }
+	{
+	    if (message[i] >= 'a' && message[i] <= 'z')
+	        message[i] -= 32;
+	}
 	for (int i = 0; cipher[i] != '\0'; i++)
-	    {
-	        if (cipher[i] >= 'a' && cipher[i] <= 'z')
-	        	cipher[i] -= 32;
-	    }
+	{
+	    if (cipher[i] >= 'a' && cipher[i] <= 'z')
+	        cipher[i] -= 32;
+	}
     if (task > 0 && task <= 3)
     {
         int keyInt = atoi(key);
@@ -177,10 +177,31 @@ int stringConversion(char message[], char key[], char cipher[], int task)
 
 void rotDecCip(char cipher[])
 {
+	char cipherResult[1024];
+	int i;
+	int ii;
 	FILE *output;
    	output = fopen("output", "w");
-   	printf("Cipher: %s\n", cipher);
-   	fprintf(output, "Cipher: %s\n", cipher);
+   	printf("Cipher: %s\n\n", cipher);
+   	fprintf(output, "Cipher: %s\n\n", cipher);
+   	for(ii = 1; ii < 26; ii++)
+   	{
+   		for(i = 0; cipher[i] != '\0'; i++)
+   		{
+   			if (cipher[i] >= 'A' && cipher[i] <= 'Z')
+   			{
+   				cipherResult[i] = ((cipher[i]-65 + (26-ii))%26) + 65;
+   			}
+   			else
+   			{
+   				cipherResult[i] = cipher[i];
+   			}
+   		}
+   		cipherResult[i] = '\0';
+   		printf("Decrypted message key: %d\n%s\n\n", ii, cipherResult);
+   		fprintf(output, "Decrypted message key:%d\n%s\n", ii, cipherResult);
+   	}
+   	fclose(output);
     return;
 }
 
@@ -192,7 +213,8 @@ void rotDecCipKey(char cipher[], int keyInt)
     fprintf(output, "Cipher:\n%s\n\n", cipher);
     printf("Key:\n%d\n\n", keyInt);
     fprintf(output, "Key:\n%d\n\n", keyInt);
-    for(int i = 0; cipher[i] != '\0'; ++i) {
+    for(int i = 0; cipher[i] != '\0'; i++)
+    {
     	if (cipher[i] >= 'A' && cipher[i] <= 'Z')
     	{
     		/* ((location of char in cipher array) - 65 to make it 0 ascii)
@@ -204,6 +226,7 @@ void rotDecCipKey(char cipher[], int keyInt)
     }
     printf("Decrypted message:\n%s\n", cipher);
     fprintf(output, "Decrypted message:\n%s\n", cipher);
+    fclose(output);
     return;
 }
 
@@ -227,6 +250,7 @@ void rotEncMsgKey(char message[], int keyInt)
     }
     printf("Encrypted message:\n%s\n", message);
     fprintf(output, "Encrypted message:\n%s\n", message);
+    fclose(output);
     return;
 }
 
@@ -236,6 +260,7 @@ void subDecCip(char cipher[], const char alphabetEng[])
     output = fopen("output", "w");
     printf("Cipher:\n%s\n\n", cipher);
     fprintf(output, "Cipher:\n%s\n\n", cipher);
+    fclose(output);
     return;
 }
 
@@ -269,6 +294,7 @@ void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
     }
     printf("Decrypted message:\n%s\n", cipher);
     fprintf(output, "Decrypted message:\n%s\n", cipher);
+    fclose(output);
     return;
 }
 
@@ -300,7 +326,8 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
     			i++; // copies char and moves to next char in message array if char isn't a capital letter
     	}
     }
-    printf("Encoded message:\n%s\n", message);
-    fprintf(output, "Encoded message:\n%s\n", message);
+    printf("Encrypted message:\n%s\n", message);
+    fprintf(output, "Encrypted message:\n%s\n", message);
+    fclose(output);
     return;
 }
