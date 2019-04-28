@@ -96,14 +96,14 @@ void readFile(char cipher[], char key[], char message[], int task)
         }
         else
         {
-            for (i=0; c < 48 || c > 57; i++)
+            for (i=0; c != 9; i++)
             {
             	fscanf(input, "%c", &line[i]);
             	c = line[i];
             }
             line[i-1] = '\0';
         	strcpy(message, line);
-        	fseek( input, -1, SEEK_CUR );
+        	fseek( input, +2, SEEK_CUR );
             fgets(line, 255, input);
             strcpy(key, line);
             for(i=0; !feof(input); i++)
@@ -125,23 +125,22 @@ void readFile(char cipher[], char key[], char message[], int task)
         }
         else
         {
-        	fgets(line, 1024, input);
-        	//fscanf(input, "%s", &line);
+        	for (i=0; c != 9; i++)
+        	{
+        	    fscanf(input, "%c", &line[i]);
+        	    c = line[i];
+        	}
+        	line[i-1] = '\0';
         	strcpy(message, line);
-        	//printf("%s\n", message);
-        	//fscanf(input, "%s", line);
+        	fseek( input, +2, SEEK_CUR );
         	fgets(line, 255, input);
-        	//fscanf(input, "%s", &line);
         	strcpy(key, line);
-        	//printf("%s\n", key);
         	for(i=0; !feof(input); i++)
         	{
-        		fscanf(input, "%c", &line[i]);
+        	    fscanf(input, "%c", &line[i]);
         	}
         	line[i-1]='\0';
-        	//fgets(line, 1024, input);
         	strcpy(cipher, line);
-        	//printf("%s",cipher);
         	fclose(input);
         }
     return;
@@ -212,8 +211,8 @@ void rotEncMsgKey(char message[], int keyInt)
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Message:\n%s\n", message);
-    fprintf(output, "Message:\n%s\n", message);
+    printf("Message:\n%s\n\n", message);
+    fprintf(output, "Message:\n%s\n\n", message);
     printf("Key:\n%d\n\n", keyInt);
     fprintf(output, "Key:\n%d\n\n", keyInt);
     for(int i = 0; message[i] != '\0'; i++) {
@@ -277,8 +276,8 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
 {
     FILE *output;
     output = fopen("output", "w");
-    printf("Message:\n%s\n", message);
-    fprintf(output, "Message:\n%s\n", message);
+    printf("Message:\n%s\n\n", message);
+    fprintf(output, "Message:\n%s\n\n", message);
     printf("Key:\n%s\n\n", key);
     fprintf(output, "Key:\n%s\n\n", key);
     for(int i = 0, ii = 0; message[i] != '\0';)
