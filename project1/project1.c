@@ -94,7 +94,7 @@ int main()																		//main() function of type integer begins
  * read with results assigned to variables and arrays, and then closed in order to carry out the program options involving a rotation method. If
  * the case chosen is 4, 5, or 6, the file name 'substitution' will be opened, read with results assigned to variables and arrays, and then
  * closed in order to carry out the program options involving a substitution method. Each file is read as the first "block" of text is scanned
- * character by character up until a tab ascii number is reached (9), and then the result is stored into the char array 'message'. Next, the scanner
+ * character by character up until a tab ASCII number is reached (9), and then the result is stored into the char array 'message'. Next, the scanner
  * moves 2 places (to compensate for '\0' and '\n') so the key is scanned properly as a full line and assigned to the char array 'key', including
  * the '\n'. There is also a '\0' symbol assigned to the key array in a position just before the end, to erase gibberish being store. Finally,
  * the last "block" of file input is scanned character by character up until the end of the file, and then assigned to the char array 'cipher'.
@@ -116,7 +116,7 @@ void readFile(char cipher[], char key[], char message[], int task)				//readFile
         }
         else																	//If there is a file
         {
-            for (i=0; c != 9; i++)												//For every character scanned in 'input' (as long as it isn't a tab ascii value (9))
+            for (i=0; c != 9; i++)												//For every character scanned in 'input' (as long as it isn't a tab ASCII value (9))
             {
             	fscanf(input, "%c", &line[i]);									//Scan each character in 'input' and put it into the char array 'line'
             	c = line[i];													//Assign 'line' char array to the char variable 'c' to check for tab
@@ -145,7 +145,7 @@ void readFile(char cipher[], char key[], char message[], int task)				//readFile
         }
         else																	//If there is a file
         {
-        	for (i=0; c != 9; i++)												//For every character scanned in 'input' (as long as it isn't a tab ascii value (9))
+        	for (i=0; c != 9; i++)												//For every character scanned in 'input' (as long as it isn't a tab ASCII value (9))
         	{
         	    fscanf(input, "%c", &line[i]);									//Scan each character in 'input' and put it into the char array 'line'
         	    c = line[i];													//Assign 'line' char array to the char variable 'c' to check for tab
@@ -206,36 +206,48 @@ int stringConversion(char message[], char key[], char cipher[], int task)		//str
 /***************************************************************************************************************************************/
 //Rotation Decryption Using Only Cipher
 
-void rotDecCip(char cipher[])
+/*This function takes an input from the char array 'cipher' and adds 1 to each alphabet char ASCII value to assign it a new value and then
+ *adds it to a new char array 'cipherResult'. It then prints 'cipherResult' to the console and a file named 'output'. This function also
+ *prints the function name, initial cipher to decrypt, and number of rotations (or ASCII values added) that were made.
+ */
+
+void rotDecCip(char cipher[])													//rotDecCip() function of type void begins, with char array 'cipher' passed through
 {
-	char cipherResult[1024];
-	int i;
-	int ii;
-	FILE *output;
-   	output = fopen("output", "w");
-   	fprintf(output, "Rotation Decryption Using Only Cipher\n\n");
-   	printf("Cipher: %s\n\n", cipher);
-   	fprintf(output, "Cipher: %s\n\n", cipher);
-   	for(ii = 0; ii < 26; ii++)
+	char cipherResult[1024];													//Declaring char array 'cipherResult' to store 1024 values
+	int i;																		//Declaring int variable 'i'
+	int ii;																		//Declaring int variable 'ii'
+	FILE *output;																//Declaring the variable 'output' as a file
+   	output = fopen("output", "w");												//Opening the file 'output' to read and assigning it to the variable 'output'
+   	fprintf(output, "Rotation Decryption Using Only Cipher\n\n");				//Print heading line to 'output' file
+   	printf("Cipher: %s\n\n", cipher);											//Print original cipher from char array 'cipher' to console
+   	fprintf(output, "Cipher: %s\n\n", cipher);									//Print original cipher from char array 'cipher' to 'output' file
+   	for(ii = 0; ii < 26; ii++)													//Loops printing while ii < 26
    	{
-   		for(i = 0; cipher[i] != '\0'; i++)
+   		for(i = 0; cipher[i] != '\0'; i++)										//For every character scanned in the char array 'cipher' until '\0'
    		{
-   			if (cipher[i] >= 'A' && cipher[i] <= 'Z')
+   			if (cipher[i] >= 'A' && cipher[i] <= 'Z')							//Check if 'cipher' char is an upper case alphabet char
    			{
-   				cipherResult[i] = ((cipher[i]-65 + (26-ii))%26) + 65;
+   				/* ((location of char in cipher array) - 65 to make it 0 ASCII)
+   				 * + (26 + loop print value int to assign new ASCII location in positive direction) %26 to find remainder integer)
+   				 * + 65 to remainder integer to accurately represent ASCII encrypted char.
+   				 */
+   				cipherResult[i] = ((cipher[i] - 65 + (26 - ii)) % 26) + 65;		//Result assigned to char array 'ciperResult'
    			}
-   			else
+   			else																//If 'cipher' char is not an upper case alphabet char
    			{
-   				cipherResult[i] = cipher[i];
+   				cipherResult[i] = cipher[i];									//'cipher' char is assigned to 'cipherResult' char array
    			}
    		}
-   		cipherResult[i] = '\0';
-   		printf("Decrypted message key: %d\n%s\n\n", ii, cipherResult);
-   		fprintf(output, "Decrypted message key:%d\n%s\n", ii, cipherResult);
+   		cipherResult[i] = '\0';													//Insert '\0' to end of array
+   		printf("Decrypted message key: %d\n%s\n\n", ii, cipherResult);			//Print decrypted message from char array 'cipherResult' and print loop number from int variable 'ii' to console
+   		fprintf(output, "Decrypted message key:%d\n%s\n", ii, cipherResult);	//Print decrypted message from char array 'cipherResult' and print loop number from int variable 'ii' 'output' file
    	}
-   	fclose(output);
-    return;
+   	fclose(output);																//Close 'output' file
+    return;																		//Return to main() function
 }
+
+/***************************************************************************************************************************************/
+//
 
 void rotDecCipKey(char cipher[], int keyInt)
 {
@@ -250,9 +262,9 @@ void rotDecCipKey(char cipher[], int keyInt)
     {
     	if (cipher[i] >= 'A' && cipher[i] <= 'Z')
     	{
-    		/* ((location of char in cipher array) - 65 to make it 0 ascii)
-    		 * + (26 - keyInt to shift char to new ascii location in negative direction) %26 to find remainder integer)
-    		 * + 65 to remainder integer to accurately represent ascii encrypted char.
+    		/* ((location of char in cipher array) - 65 to make it 0 ASCII)
+    		 * + (26 - keyInt to shift char to assign new ASCII location in negative direction) %26 to find remainder integer)
+    		 * + 65 to remainder integer to accurately represent ASCII encrypted char.
     		 */
     		cipher[i] = ((cipher[i] - 65 + (26 - keyInt)) %26) + 65;
     	}
@@ -275,9 +287,9 @@ void rotEncMsgKey(char message[], int keyInt)
     for(int i = 0; message[i] != '\0'; i++) {
     	if (message[i] >= 'A' && message[i] <= 'Z')
     	{
-    		/* (((location of char in message array) - 65 to make it 0 ascii)
-    		 * + keyInt to shift char to new ascii number in positive direction) %26 to find remainder integer)
-    		 * + 65 to remainder integer to accurately represent ascii encrypted char.
+    		/* (((location of char in message array) - 65 to make it 0 ASCII)
+    		 * + keyInt to shift char to assign new ASCII number in positive direction) %26 to find remainder integer)
+    		 * + 65 to remainder integer to accurately represent ASCII encrypted char.
     		 */
     		message[i] = (((message[i] - 65) + keyInt) %26) + 65;
     	}
@@ -310,22 +322,22 @@ void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
     fprintf(output, "Key:\n%s\n\n", key);
     for(int i = 0, ii = 0; cipher[i] != '\0';)
     {
-     	if (cipher[i] >= 'A' && cipher[i] <= 'Z') // check if cipher char is a capital letter
+     	if (cipher[i] >= 'A' && cipher[i] <= 'Z') 								//Check if 'cipher' char is an upper case alphabet char
      	{
-     		if (cipher[i] == key[ii]) // matches cipher char to char in key
+     		if (cipher[i] == key[ii]) 											// matches cipher char to char in key
         	{
-        		cipher[i] = alphabetEng[ii]; // change cipher char to char in alphabetEng in same index
-        		i++; // move to next char in cipher array
-        		ii=0; // alphabetEng and key array positions remain constant
+        		cipher[i] = alphabetEng[ii]; 									// change cipher char to char in alphabetEng in same index
+        		i++; 															// move to next char in cipher array
+        		ii=0; 															// alphabetEng and key array positions remain constant
         	}
         	else
         	{
-        			ii++; // alphabetEng and key array positions move up one
+        			ii++; 														// alphabetEng and key array positions move up one
         	}
         }
        	else
        	{
-       			i++; // copies char and moves to next char in cipher array if char isn't a capital letter
+       			i++; 															// copies char and moves to next char in cipher array if char isn't a capital letter
        	}
     }
     printf("Decrypted message:\n%s\n", cipher);
@@ -345,22 +357,22 @@ void subEncMsgKey(char message[], char key[], const char alphabetEng[])
     fprintf(output, "Key:\n%s\n\n", key);
     for(int i = 0, ii = 0; message[i] != '\0';)
     {
-    	if (message[i] >= 'A' && message[i] <= 'Z') // check if message char is a capital letter
+    	if (message[i] >= 'A' && message[i] <= 'Z') 							//Check if 'message' char is an upper case alphabet char
     	{
-    		if (message[i] == alphabetEng[ii]) // matches message char to char in alphabet
+    		if (message[i] == alphabetEng[ii]) 									// matches message char to char in alphabet
     		{
-    			message[i] = key[ii]; // change message char to char in key in same index
-    			i++; // move to next char in message array
-    			ii=0; // alphabetEng and key array positions remain constant
+    			message[i] = key[ii]; 											// change message char to char in key in same index
+    			i++; 															// move to next char in message array
+    			ii=0; 															// alphabetEng and key array positions remain constant
     		}
     		else
     		{
-    				ii++; // alphabetEng and key array positions move up one
+    				ii++; 														// alphabetEng and key array positions move up one
     		}
     	}
     	else
     	{
-    			i++; // copies char and moves to next char in message array if char isn't a capital letter
+    			i++; 															// copies char and moves to next char in message array if char isn't a capital letter
     	}
     }
     printf("Encrypted message:\n%s\n", message);
