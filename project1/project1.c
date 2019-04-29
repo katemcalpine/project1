@@ -83,7 +83,7 @@ int main()																		//main() function of type integer begins
         default:																//Default case
             printf("%d is not an option.\n", task);								//Print default line to console
     }
-    return 0;																	//Return value 0 because function is integer type and program ends
+    return 0;																	//Return value 0 (because function is integer type) and program ends
 }
 
 /***************************************************************************************************************************************/
@@ -170,33 +170,41 @@ void readFile(char cipher[], char key[], char message[], int task)				//readFile
 /***************************************************************************************************************************************/
 //String Conversion Function
 
-int stringConversion(char message[], char key[], char cipher[], int task)
+/*Converts lower case alphabet char inputs from char arrays 'message' and 'cipher' and 'key' to upper case alphabet chars. Anything that isn't
+ * an alphabet char is left as is. The int variable 'task' is also passed through in order to determine if the char array 'key' needs to be
+ * turned from a string to an integer and put into the int variable 'keyInt' for use in the functions requiring the 'rotation' file inputs.
+ */
+
+int stringConversion(char message[], char key[], char cipher[], int task)		//stringConversion() function of type int begins, with char arrays 'cipher', 'key' and 'message', and int variable 'task' passed through
 {
-	for (int i = 0; message[i] != '\0'; i++)
+	for (int i = 0; message[i] != '\0'; i++)									//For every character scanned in the char array 'message' until '\0' is reached
 	{
-	    if (message[i] >= 'a' && message[i] <= 'z')
-	        message[i] -= 32;
+	    if (message[i] >= 'a' && message[i] <= 'z')								//If a char is a lower case alphabet char
+	        message[i] -= 32;													//Turn it into an upper case alphabet char
 	}
-	for (int i = 0; cipher[i] != '\0'; i++)
+	for (int i = 0; cipher[i] != '\0'; i++)										//For every character scanned in the char array 'cipher' until '\0'
 	{
-	    if (cipher[i] >= 'a' && cipher[i] <= 'z')
-	        cipher[i] -= 32;
+	    if (cipher[i] >= 'a' && cipher[i] <= 'z')								//If a char is a lower case alphabet char
+	        cipher[i] -= 32;													//Turn it into an upper case alphabet char
 	}
-    if (task > 0 && task <= 3)
+    if (task > 0 && task <= 3)													//If the variable 'task' input is 1, 2, or 3
     {
-        int keyInt = atoi(key);
-        return keyInt;
+        int keyInt = atoi(key);													//Turn the value of char array 'key' into an integer and assign to int variable 'keyInt'
+        return keyInt;															//Return value stored in int variable 'keyInt' to main() function
     }
-    else if (task > 3 && task <= 6)
+    else if (task > 3 && task <= 6)												//If the variable 'task' input is 4, 5, or 6
     {
-        for (int i = 0; key[i] != '\0'; i++)
+        for (int i = 0; key[i] != '\0'; i++)									//For every character scanned in the char array 'key' until '\0'
         {
-            if (key[i] >= 'a' && key[i] <= 'z')
-            	key[i] -= 32;
+            if (key[i] >= 'a' && key[i] <= 'z')									//If a char is a lower case alphabet char
+            	key[i] -= 32;													//Turn it into an upper case alphabet char
         }
     }
-    return 0;
+    return 0;																	//Return value 0 (because function is integer type) to main() function
 }
+
+/***************************************************************************************************************************************/
+//Rotation Decryption Using Only Cipher
 
 void rotDecCip(char cipher[])
 {
