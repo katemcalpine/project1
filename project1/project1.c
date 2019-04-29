@@ -207,8 +207,9 @@ int stringConversion(char message[], char key[], char cipher[], int task)		//str
 //Rotation Decryption Using Only Cipher
 
 /*This function takes an input from the char array 'cipher' and adds 1 to each alphabet char ASCII value to assign it a new value and then
- *adds it to a new char array 'cipherResult'. It then prints 'cipherResult' to the console and a file named 'output'. This function also
- *prints the function name, initial cipher to decrypt, and number of rotations (or ASCII values added) that were made.
+ *adds it to a new char array 'cipherResult'. It then prints 'cipherResult' to the console and a file named 'output' and keeps repeating this
+ *process in a loop 26 times. This function also prints the function name, initial cipher to decrypt, and number of rotations (or ASCII values
+ *added) that were made.
  */
 
 void rotDecCip(char cipher[])													//rotDecCip() function of type void begins, with char array 'cipher' passed through
@@ -240,27 +241,32 @@ void rotDecCip(char cipher[])													//rotDecCip() function of type void be
    		}
    		cipherResult[i] = '\0';													//Insert '\0' to end of array
    		printf("Decrypted message key: %d\n%s\n\n", ii, cipherResult);			//Print decrypted message from char array 'cipherResult' and print loop number from int variable 'ii' to console
-   		fprintf(output, "Decrypted message key:%d\n%s\n", ii, cipherResult);	//Print decrypted message from char array 'cipherResult' and print loop number from int variable 'ii' 'output' file
+   		fprintf(output, "Decrypted message key:%d\n%s\n", ii, cipherResult);	//Print decrypted message from char array 'cipherResult' and print loop number from int variable 'ii' to 'output' file
    	}
    	fclose(output);																//Close 'output' file
     return;																		//Return to main() function
 }
 
 /***************************************************************************************************************************************/
-//
+//Rotation Decryption Using Cipher and Key
 
-void rotDecCipKey(char cipher[], int keyInt)
+/*This function takes an input from the char array 'cipher' and adds the value from the variable 'keyInt' to each alphabet char ASCII value
+ *to assign it a new value then prints the result to the console and a file named 'output'. This function also prints the function name,
+ *initial cipher to decrypt, and the key used.
+ */
+
+void rotDecCipKey(char cipher[], int keyInt)									//rotDecCipKey() function of type void begins, with char array 'cipher' and int variable 'keyInt' passed through
 {
-    FILE *output;
-    output = fopen("output", "w");
-    fprintf(output, "Rotation Decryption Using Cipher and Key\n\n");
-    printf("Cipher:\n%s\n\n", cipher);
-    fprintf(output, "Cipher:\n%s\n\n", cipher);
-    printf("Key:\n%d\n\n", keyInt);
-    fprintf(output, "Key:\n%d\n\n", keyInt);
-    for(int i = 0; cipher[i] != '\0'; i++)
+    FILE *output;																//Declaring the variable 'output' as a file
+    output = fopen("output", "w");												//Opening the file 'output' to read and assigning it to the variable 'output'
+    fprintf(output, "Rotation Decryption Using Cipher and Key\n\n");			//Print heading line to 'output' file
+    printf("Cipher:\n%s\n\n", cipher);											//Print original cipher from char array 'cipher' to console
+    fprintf(output, "Cipher:\n%s\n\n", cipher);									//Print original cipher from char array 'cipher' to 'output' file
+    printf("Key:\n%d\n\n", keyInt);												//Print original key from int variable 'keyInt' to console
+    fprintf(output, "Key:\n%d\n\n", keyInt);									//Print original key from int variable 'keyInt' to 'output' file
+    for(int i = 0; cipher[i] != '\0'; i++)										//For every character scanned in the char array 'cipher' until '\0'
     {
-    	if (cipher[i] >= 'A' && cipher[i] <= 'Z')
+    	if (cipher[i] >= 'A' && cipher[i] <= 'Z')								//Check if 'cipher' char is an upper case alphabet char
     	{
     		/* ((location of char in cipher array) - 65 to make it 0 ASCII)
     		 * + (26 - keyInt to shift char to assign new ASCII location in negative direction) %26 to find remainder integer)
@@ -269,23 +275,27 @@ void rotDecCipKey(char cipher[], int keyInt)
     		cipher[i] = ((cipher[i] - 65 + (26 - keyInt)) %26) + 65;
     	}
     }
-    printf("Decrypted message:\n%s\n", cipher);
-    fprintf(output, "Decrypted message:\n%s\n", cipher);
-    fclose(output);
-    return;
+    printf("Decrypted message:\n%s\n", cipher);									//Print decrypted message from char array 'cipher' to console
+    fprintf(output, "Decrypted message:\n%s\n", cipher);						//Print decrypted message from char array 'cipher' to 'output' file
+    fclose(output);																//Close 'output' file
+    return;																		//Return to main() function
 }
 
-void rotEncMsgKey(char message[], int keyInt)
+/***************************************************************************************************************************************/
+//Rotation Encryption Using Message and Key
+
+void rotEncMsgKey(char message[], int keyInt)									//rotEncMsgKey() function of type void begins, with char array 'message', and int variable 'keyInt' passed through
 {
-    FILE *output;
-    output = fopen("output", "w");
-    fprintf(output, "Rotation Encryption Using Message and Key\n\n");
-    printf("Message:\n%s\n\n", message);
-    fprintf(output, "Message:\n%s\n\n", message);
-    printf("Key:\n%d\n\n", keyInt);
-    fprintf(output, "Key:\n%d\n\n", keyInt);
-    for(int i = 0; message[i] != '\0'; i++) {
-    	if (message[i] >= 'A' && message[i] <= 'Z')
+    FILE *output;																//Declaring the variable 'output' as a file
+    output = fopen("output", "w");												//Opening the file 'output' to read and assigning it to the variable 'output'
+    fprintf(output, "Rotation Encryption Using Message and Key\n\n");			//Print heading line to 'output' file
+    printf("Message:\n%s\n\n", message);										//Print original message from char array 'message' to console
+    fprintf(output, "Message:\n%s\n\n", message);								//Print original message from char array 'message' to 'output' file
+    printf("Key:\n%d\n\n", keyInt);												//Print original key from int variable 'keyInt' to console
+    fprintf(output, "Key:\n%d\n\n", keyInt);									//Print original key from int variable 'keyInt' to 'output' file
+    for(int i = 0; message[i] != '\0'; i++)										//For every character scanned in the char array 'message' until '\0'
+    {
+    	if (message[i] >= 'A' && message[i] <= 'Z')								//Check if 'message' char is an upper case alphabet char
     	{
     		/* (((location of char in message array) - 65 to make it 0 ASCII)
     		 * + keyInt to shift char to assign new ASCII number in positive direction) %26 to find remainder integer)
@@ -294,41 +304,50 @@ void rotEncMsgKey(char message[], int keyInt)
     		message[i] = (((message[i] - 65) + keyInt) %26) + 65;
     	}
     }
-    printf("Encrypted message:\n%s\n", message);
-    fprintf(output, "Encrypted message:\n%s\n", message);
-    fclose(output);
-    return;
+    printf("Encrypted message:\n%s\n", message);								//Print encrypted message from char array 'message' to console
+    fprintf(output, "Encrypted message:\n%s\n", message);						//Print encrypted message from char array 'message' to 'output' file
+    fclose(output);																//Close 'output' file
+    return;																		//Return to main() function
 }
 
-void subDecCip(char cipher[], const char alphabetEng[])
+/***************************************************************************************************************************************/
+//Substitution Decryption Using Only Cipher
+
+/*Is not complete.
+ */
+
+void subDecCip(char cipher[], const char alphabetEng[])							//subDecCip() function of type void begins, with char arrays 'cipher' and 'alphabetEng' passed through
 {
-    FILE *output;
-    output = fopen("output", "w");
-    fprintf(output, "Substitution Decryption Using Only Cipher\n\n");
-    printf("Cipher:\n%s\n\n", cipher);
-    fprintf(output, "Cipher:\n%s\n\n", cipher);
-    fclose(output);
-    return;
+    FILE *output;																//Declaring the variable 'output' as a file
+    output = fopen("output", "w");												//Opening the file 'output' to read and assigning it to the variable 'output'
+    fprintf(output, "Substitution Decryption Using Only Cipher\n\n");			//Print heading line to 'output' file
+    printf("Cipher:\n%s\n\n", cipher);											//Print original cipher from char array 'cipher' to console
+    fprintf(output, "Cipher:\n%s\n\n", cipher);									//Print original cipher from char array 'cipher' to 'output' file
+    fclose(output);																//Close 'output' file
+    return;																		//Return to main() function
 }
 
-void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
+/***************************************************************************************************************************************/
+//Substitution Decryption Using Cipher and Key
+
+void subDecCipKey(char cipher[], char key[], const char alphabetEng[])			//subDecCipKey() function of type void begins, with char arrays 'cipher', 'key' and 'alphabetEng' passed through
 {
-    FILE *output;
-    output = fopen("output", "w");
-    fprintf(output, "Substitution Decryption Using Cipher and Key\n\n");
-    printf("Cipher:\n%s\n\n", cipher);
-    fprintf(output, "Cipher:\n%s\n\n", cipher);
-    printf("Key:\n%s\n\n", key);
-    fprintf(output, "Key:\n%s\n\n", key);
-    for(int i = 0, ii = 0; cipher[i] != '\0';)
+    FILE *output;																//Declaring the variable 'output' as a file
+    output = fopen("output", "w");												//Opening the file 'output' to read and assigning it to the variable 'output'
+    fprintf(output, "Substitution Decryption Using Cipher and Key\n\n");		//Print heading line to 'output' file
+    printf("Cipher:\n%s\n\n", cipher);											//Print original cipher from char array 'cipher' to console
+    fprintf(output, "Cipher:\n%s\n\n", cipher);									//Print original cipher from char array 'cipher' to 'output' file
+    printf("Key:\n%s\n\n", key);												//Print original key from char array 'key' to console
+    fprintf(output, "Key:\n%s\n\n", key);										//Print original key from char array 'key' to 'output' file
+    for(int i = 0, ii = 0; cipher[i] != '\0';)									//For every character scanned in the char array 'cipher' until '\0'
     {
      	if (cipher[i] >= 'A' && cipher[i] <= 'Z') 								//Check if 'cipher' char is an upper case alphabet char
      	{
-     		if (cipher[i] == key[ii]) 											// matches cipher char to char in key
+     		if (cipher[i] == key[ii]) 											//If 'cipher' char matches char in 'key' array
         	{
-        		cipher[i] = alphabetEng[ii]; 									// change cipher char to char in alphabetEng in same index
-        		i++; 															// move to next char in cipher array
-        		ii=0; 															// alphabetEng and key array positions remain constant
+        		cipher[i] = alphabetEng[ii]; 									//Change 'cipher' char to char in 'alphabetEng' in same index
+        		i++; 															//Move to next char in 'cipher' array
+        		ii=0; 															//'alphabetEng' and 'key' array positions remain constant
         	}
         	else
         	{
@@ -340,43 +359,46 @@ void subDecCipKey(char cipher[], char key[], const char alphabetEng[])
        			i++; 															// copies char and moves to next char in cipher array if char isn't a capital letter
        	}
     }
-    printf("Decrypted message:\n%s\n", cipher);
-    fprintf(output, "Decrypted message:\n%s\n", cipher);
-    fclose(output);
-    return;
+    printf("Decrypted message:\n%s\n", cipher);									//Print decrypted message from char array 'cipher' to console
+    fprintf(output, "Decrypted message:\n%s\n", cipher);						//Print decrypted message from char array 'cipher' to 'output' file
+    fclose(output);																//Close 'output' file
+    return;																		//Return to main() function
 }
 
-void subEncMsgKey(char message[], char key[], const char alphabetEng[])
+/***************************************************************************************************************************************/
+//Substitution Encryption Using Message and Key
+
+void subEncMsgKey(char message[], char key[], const char alphabetEng[])			//subEncMsgKey() function of type void begins, with char arrays 'message', 'key' and 'alphabetEng' passed through
 {
-    FILE *output;
-    output = fopen("output", "w");
-    fprintf(output, "Substitution Encryption Using Message and Key\n\n");
-    printf("Message:\n%s\n\n", message);
-    fprintf(output, "Message:\n%s\n\n", message);
-    printf("Key:\n%s\n\n", key);
-    fprintf(output, "Key:\n%s\n\n", key);
-    for(int i = 0, ii = 0; message[i] != '\0';)
+    FILE *output;																//Declaring the variable 'output' as a file
+    output = fopen("output", "w");												//Opening the file 'output' to read and assigning it to the variable 'output'
+    fprintf(output, "Substitution Encryption Using Message and Key\n\n");		//Print heading line to 'output' file
+    printf("Message:\n%s\n\n", message);										//Print original message from char array 'message' to console
+    fprintf(output, "Message:\n%s\n\n", message);								//Print original message from char array 'message' to 'output' file
+    printf("Key:\n%s\n\n", key);												//Print original key from char array 'key' to console
+    fprintf(output, "Key:\n%s\n\n", key);										//Print original key from char array 'key' to 'output' file
+    for(int i = 0, ii = 0; message[i] != '\0';)									//For every character scanned in the char array 'cipher' until '\0'
     {
     	if (message[i] >= 'A' && message[i] <= 'Z') 							//Check if 'message' char is an upper case alphabet char
     	{
-    		if (message[i] == alphabetEng[ii]) 									// matches message char to char in alphabet
+    		if (message[i] == alphabetEng[ii]) 									//If 'message' char matches char in 'alphabetEng' array
     		{
-    			message[i] = key[ii]; 											// change message char to char in key in same index
-    			i++; 															// move to next char in message array
-    			ii=0; 															// alphabetEng and key array positions remain constant
+    			message[i] = key[ii]; 											//Change 'message' char to char in 'key' in same index
+    			i++; 															//Move to next char in 'message' array
+    			ii=0; 															//'alphabetEng' and 'key' array positions remain constant
     		}
     		else
     		{
-    				ii++; 														// alphabetEng and key array positions move up one
+    				ii++; 														//'alphabetEng' and 'key' array positions move up one
     		}
     	}
     	else
     	{
-    			i++; 															// copies char and moves to next char in message array if char isn't a capital letter
+    			i++; 															//Store char and moves to next char in message array if char isn't a capital letter
     	}
     }
-    printf("Encrypted message:\n%s\n", message);
-    fprintf(output, "Encrypted message:\n%s\n", message);
-    fclose(output);
-    return;
+    printf("Encrypted message:\n%s\n", message);								//Print encrypted message from char array 'message' to console
+    fprintf(output, "Encrypted message:\n%s\n", message);						//Print decrypted message from char array 'message' to 'output' file
+    fclose(output);																//Close 'output' file
+    return;																		//Return to main() function
 }
